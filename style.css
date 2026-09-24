@@ -474,26 +474,14 @@ select:focus-visible,
 }
 
 /* =================================================================
-   REDUCED MOTION
-   ================================================================= */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  .liquid-blob { animation: none; }
-}
-
-/* =================================================================
-   RESPONSIVE
+   RESPONSIVE (移除了关闭动画的代码，所有设备都会播放动画)
    ================================================================= */
 @media (max-width: 768px) {
-  /* 手机上关闭液态动画，保留静态柔和背景，确保绝对流畅 */
+  /* 移动端不再关闭动画，改为降低模糊度和透明度以平衡性能 */
   .liquid-blob {
-    animation: none;
+    /* 注意：此处已移除 animation: none; */
     opacity: 0.3;
-    filter: blur(30px);
+    filter: blur(25px); /* 手机上减少模糊，能大幅降低 GPU 负担 */
   }
 
   .hero-section { padding: 40px 16px 24px; min-height: auto; }
@@ -519,3 +507,5 @@ select:focus-visible,
   .social-btn { width: 38px; height: 38px; border-radius: 10px; }
   .social-btn svg { width: 16px; height: 16px; }
 }
+
+/* 注意：此处也移除了 prefers-reduced-motion 对 liquid-blob 的禁用，确保动画强制执行 */
