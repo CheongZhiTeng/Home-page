@@ -107,7 +107,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 fetchRepos();
 
 // =================================================================
-// 背景粒子动画 — 与 Nanatsukaze 完全一致
+// BACKGROUND PARTICLES ANIMATION
 // =================================================================
 (function initBackgroundParticles() {
   const canvas = document.getElementById('bgCanvas');
@@ -143,7 +143,10 @@ fetchRepos();
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const target = Math.min(Math.max(20, Math.floor((w * h) / 22000)), 80);
+    
+    // === PERFORMANCE FIX: Reduced max particles from 80 to 40 ===
+    const target = Math.min(Math.max(15, Math.floor((w * h) / 30000)), 40);
+    
     particles = [];
     for (let i = 0; i < target; i++) {
       particles.push({
@@ -260,6 +263,16 @@ fetchRepos();
   }
 
   window.bgParticles = { start: start, stop: stop };
+
+  // === PERFORMANCE FIX: Pause animation while scrolling ===
+  let scrollTimer = null;
+  window.addEventListener('scroll', function () {
+    if (running) stop();
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () {
+      start();
+    }, 150);
+  }, { passive: true });
 
   let resizeTimer = null;
   window.addEventListener('resize', function () {
