@@ -45,8 +45,8 @@ function renderRepos(repos) {
 
   if (!repos.length) {
     repoGrid.innerHTML =
-      '<div class="no-results" style="grid-column:1/-1;text-align:center;color:var(--gray-400);padding:60px 20px;font-size:0.82rem;">' +
-      '<strong style="display:block;font-size:0.9rem;color:var(--gray-500);margin-bottom:8px;">No repositories found</strong>' +
+      '<div class="no-results" style="grid-column:1/-1;text-align:center;color:var(--text-dim);padding:60px 20px;font-size:0.82rem;">' +
+      '<strong style="display:block;font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;">No repositories found</strong>' +
       'Try a different search term.</div>';
     return;
   }
