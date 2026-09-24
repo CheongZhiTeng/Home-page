@@ -1,5 +1,5 @@
 /* =================================================================
-   RESET & TOKENS  — 完全沿用 Nanatsukaze 设计变量
+   RESET & TOKENS
    ================================================================= */
 * {
   margin: 0;
@@ -43,7 +43,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== 全屏渐变背景（同 Nanatsukaze） ===== */
+/* ===== FULLSCREEN GRADIENT BACKGROUND ===== */
 body::before {
   content: '';
   position: fixed;
@@ -56,9 +56,12 @@ body::before {
     radial-gradient(at 4% 62%,  rgba(59, 130, 246, 0.18) 0px, transparent 45%),
     radial-gradient(at 96% 72%, rgba(251, 191, 36, 0.14) 0px, transparent 45%),
     radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.14) 0px, transparent 50%);
+  /* === PERFORMANCE FIX: Force GPU acceleration === */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
-/* ===== 焦点样式（同 Nanatsukaze） ===== */
+/* ===== FOCUS STYLES ===== */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -68,13 +71,17 @@ select:focus-visible,
   outline-offset: 3px;
 }
 
-/* ===== 背景画布 & 网格 ===== */
+/* ===== BACKGROUND CANVAS & GRID ===== */
 .bg-canvas {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   display: block;
+  /* === PERFORMANCE FIX: GPU acceleration === */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .bg-grid {
@@ -89,14 +96,12 @@ select:focus-visible,
     linear-gradient(rgba(139, 92, 246, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
   background-size: 50px 50px;
-  animation: gridDrift 24s linear infinite;
+  /* === PERFORMANCE FIX: Removed infinite animation, added GPU hints === */
+  opacity: 0.6;
+  transform: translateZ(0);
+  will-change: transform;
   -webkit-mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
   mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
-}
-
-@keyframes gridDrift {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(50px, 50px, 0); }
 }
 
 /* =================================================================
@@ -114,9 +119,8 @@ select:focus-visible,
   max-width: 620px;
   width: 100%;
   text-align: center;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* === PERFORMANCE FIX: Removed backdrop-filter, increased opacity === */
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius);
   padding: 48px 36px 40px;
@@ -176,7 +180,7 @@ select:focus-visible,
 }
 
 /* =================================================================
-   SOCIAL LINKS  — 完全沿用 Nanatsukaze 样式
+   SOCIAL LINKS
    ================================================================= */
 .social-links {
   display: flex;
@@ -194,10 +198,9 @@ select:focus-visible,
   align-items: center;
   justify-content: center;
   color: var(--gray-600);
-  background: rgba(255, 255, 255, 0.75);
+  /* === PERFORMANCE FIX: Removed backdrop-filter === */
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
   text-decoration: none;
   transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease,
@@ -250,7 +253,7 @@ select:focus-visible,
   margin-top: 8px;
 }
 
-/* ===== 控件行 ===== */
+/* ===== CONTROLS ===== */
 .controls {
   display: flex;
   gap: 14px;
@@ -261,7 +264,6 @@ select:focus-visible,
   animation-delay: 0.3s;
 }
 
-/* ===== 搜索框 — 完全沿用 Nanatsukaze ===== */
 .search-wrap {
   position: relative;
   display: flex;
@@ -287,9 +289,8 @@ select:focus-visible,
   padding: 0 18px 0 46px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* === PERFORMANCE FIX: Removed backdrop-filter === */
+  background: rgba(255, 255, 255, 0.92);
   color: var(--gray-700);
   font-size: 0.85rem;
   font-family: inherit;
@@ -312,15 +313,14 @@ select:focus-visible,
   transform: scale(1.1);
 }
 
-/* ===== 排序下拉 ===== */
+/* ===== SORT SELECT ===== */
 .sort-select {
   height: 46px;
   padding: 0 18px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  /* === PERFORMANCE FIX: Removed backdrop-filter === */
+  background: rgba(255, 255, 255, 0.92);
   color: var(--gray-600);
   font-size: 0.82rem;
   font-family: inherit;
@@ -344,7 +344,7 @@ select:focus-visible,
 }
 
 /* =================================================================
-   REPO GRID  — 复用 Nanatsukaze .gallery-card 的视觉语言
+   REPO GRID
    ================================================================= */
 .repo-grid {
   display: grid;
@@ -486,7 +486,6 @@ select:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .bg-grid { animation: none; }
 }
 
 /* =================================================================
