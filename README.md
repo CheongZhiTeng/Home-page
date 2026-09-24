@@ -29,18 +29,6 @@
 
 <br>
 
-<!-- ================= GITHUB STATS (毛玻璃质感) ================= -->
-<div align="center">
-  <h2>📊 GitHub Stats</h2>
-  <br>
-  <!-- 匹配网站的浅色背景 (#faf9fc)、标题色 (#6366f1)、图标色 (#a855f7)、边框色 (#c7d2fe) -->
-  <a href="https://github.com/cheongzhiteng">
-    <img height="180em" src="https://github-readme-stats.vercel.app/api?username=cheongzhiteng&show_icons=true&theme=radical&bg_color=faf9fc&title_color=6366f1&text_color=374151&icon_color=a855f7&border_color=c7d2fe&hide_border=false" alt="Cheong's GitHub Stats" />
-    <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=cheongzhiteng&layout=compact&theme=radical&bg_color=faf9fc&title_color=6366f1&text_color=374151&icon_color=a855f7&border_color=c7d2fe&hide_border=false" alt="Top Languages" />
-  </a>
-</div>
-
-<br>
 
 <!-- ================= FOOTER ================= -->
 <div align="center">
