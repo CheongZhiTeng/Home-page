@@ -2,26 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- 移动端适配的关键：设置视口宽度和初始缩放比例 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cheong Zhi Teng · Home</title>
 
+  <!-- 预连接，加速字体加载 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- 引入样式表 -->
   <link rel="stylesheet" href="style.css">
+  
+  <!-- 引入 Michroma 字体 -->
   <link href="https://fonts.googleapis.com/css2?family=Michroma:ital,wght@0,400&display=swap" rel="stylesheet">
 </head>
 <body>
 
+  <!-- 背景粒子画布（在移动端会被 CSS 隐藏以节省性能） -->
   <canvas id="bgCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+  <!-- 背景网格 -->
   <div class="bg-grid" aria-hidden="true"></div>
 
   <div id="app">
     <main id="homeView">
 
-      <!-- ===== HERO / INTRO ===== -->
+      <!-- ===== HERO / INTRO 区域 ===== -->
       <header class="hero-section">
         <div class="hero-card">
           <div class="hero-avatar-wrap">
+            <!-- 如果没有 logo.png，图片会优雅地自动隐藏 -->
             <img src="pictures/logo.png" alt="Cheong Zhi Teng" class="hero-avatar"
                  onerror="this.style.display='none'">
           </div>
@@ -33,6 +42,7 @@
             to explore, fork, or reach out.
           </p>
 
+          <!-- 社交链接按钮 -->
           <nav class="social-links" aria-label="Social links">
             <a href="https://github.com/cheongzhiteng" target="_blank"
                rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
@@ -40,18 +50,19 @@
                 <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
               </svg>
             </a>
-            <!-- 你可以在这里加更多社交链接 -->
+            <!-- 你可以在下方继续添加更多社交按钮 -->
           </nav>
         </div>
       </header>
 
-      <!-- ===== REPOSITORIES ===== -->
+      <!-- ===== REPOSITORIES 展示区 ===== -->
       <section class="repos-section">
         <div class="repos-header">
           <h2 class="repos-title">My Repositories</h2>
           <p class="repos-subtitle">A showcase of what I've been building</p>
         </div>
 
+        <!-- 搜索和排序控件（移动端会自动堆叠） -->
         <div class="controls">
           <div class="search-wrap">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -70,18 +81,20 @@
           </select>
         </div>
 
+        <!-- 加载状态、错误提示、仓库网格 -->
         <div id="loading" class="loading">Loading repositories…</div>
         <div id="error" class="error" style="display:none;"></div>
-
         <div id="repoGrid" class="repo-grid"></div>
       </section>
 
+      <!-- ===== 页脚 ===== -->
       <footer class="footer">
         <p>© <span id="year"></span> Cheong Zhi Teng</p>
       </footer>
     </main>
   </div>
 
+  <!-- 引入 JavaScript -->
   <script src="app.js"></script>
 </body>
 </html>
