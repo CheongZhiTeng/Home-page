@@ -43,22 +43,54 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== FULLSCREEN GRADIENT BACKGROUND ===== */
-body::before {
-  content: '';
+/* ===== 液态融球背景 ===== */
+.liquid-bg {
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: -1;
   pointer-events: none;
-  background-image:
-    radial-gradient(at 12% 8%,  rgba(139, 92, 246, 0.22) 0px, transparent 45%),
-    radial-gradient(at 88% 4%,  rgba(236, 72, 153, 0.16) 0px, transparent 45%),
-    radial-gradient(at 4% 62%,  rgba(59, 130, 246, 0.18) 0px, transparent 45%),
-    radial-gradient(at 96% 72%, rgba(251, 191, 36, 0.14) 0px, transparent 45%),
-    radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.14) 0px, transparent 50%);
-  /* === PERFORMANCE FIX: Force GPU acceleration === */
-  transform: translateZ(0);
-  will-change: transform;
+  overflow: hidden;
+  background: transparent;
+  filter: blur(40px);
+  transform: translateZ(0); /* GPU 加速 */
+}
+
+.liquid-blob {
+  position: absolute;
+  width: 50vmax;
+  height: 50vmax;
+  opacity: 0.45;
+  will-change: transform, border-radius;
+  animation: liquidMove 16s infinite ease-in-out alternate;
+}
+
+.l1 {
+  background: #6366f1;
+  top: -10vmax; left: -10vmax;
+  animation-delay: 0s;
+}
+
+.l2 {
+  background: #a855f7;
+  bottom: -15vmax; right: -10vmax;
+  animation-delay: -5s;
+}
+
+.l3 {
+  background: #ec4899;
+  top: 20vmax; left: 30vmax;
+  animation-delay: -10s;
+}
+
+@keyframes liquidMove {
+  0% {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translate(10%, 15%) rotate(20deg);
+  }
 }
 
 /* ===== FOCUS STYLES ===== */
@@ -69,39 +101,6 @@ select:focus-visible,
 .repo-card:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
-}
-
-/* ===== BACKGROUND CANVAS & GRID ===== */
-.bg-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  display: block;
-  /* === PERFORMANCE FIX: GPU acceleration === */
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.bg-grid {
-  position: fixed;
-  top: -50px;
-  left: -50px;
-  width: calc(100vw + 50px);
-  height: calc(100vh + 50px);
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(139, 92, 246, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
-  background-size: 50px 50px;
-  /* === PERFORMANCE FIX: Removed infinite animation, added GPU hints === */
-  opacity: 0.6;
-  transform: translateZ(0);
-  will-change: transform;
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
-  mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
 }
 
 /* =================================================================
@@ -119,7 +118,6 @@ select:focus-visible,
   max-width: 620px;
   width: 100%;
   text-align: center;
-  /* === PERFORMANCE FIX: Removed backdrop-filter, increased opacity === */
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius);
@@ -129,6 +127,7 @@ select:focus-visible,
     0 8px 24px rgba(236, 72, 153, 0.08),
     0 1px 3px rgba(0, 0, 0, 0.04);
   animation: heroIn 0.7s var(--ease-smooth) both;
+  transform: translateZ(0); /* 防止滚动闪烁 */
 }
 
 @keyframes heroIn {
@@ -198,7 +197,6 @@ select:focus-visible,
   align-items: center;
   justify-content: center;
   color: var(--gray-600);
-  /* === PERFORMANCE FIX: Removed backdrop-filter === */
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
@@ -289,7 +287,6 @@ select:focus-visible,
   padding: 0 18px 0 46px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.9);
-  /* === PERFORMANCE FIX: Removed backdrop-filter === */
   background: rgba(255, 255, 255, 0.92);
   color: var(--gray-700);
   font-size: 0.85rem;
@@ -313,13 +310,11 @@ select:focus-visible,
   transform: scale(1.1);
 }
 
-/* ===== SORT SELECT ===== */
 .sort-select {
   height: 46px;
   padding: 0 18px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.9);
-  /* === PERFORMANCE FIX: Removed backdrop-filter === */
   background: rgba(255, 255, 255, 0.92);
   color: var(--gray-600);
   font-size: 0.82rem;
@@ -363,6 +358,7 @@ select:focus-visible,
   transition: transform 0.35s var(--ease-bounce), box-shadow 0.35s var(--ease-smooth);
   animation: cardIn 0.45s var(--ease-smooth) both;
   cursor: default;
+  transform: translateZ(0);
 }
 
 .repo-card:hover {
@@ -486,16 +482,18 @@ select:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .liquid-blob { animation: none; }
 }
 
 /* =================================================================
    RESPONSIVE
    ================================================================= */
 @media (max-width: 768px) {
-  .bg-canvas { display: none !important; }
-  .bg-grid {
-    animation: none !important;
-    opacity: 0.6;
+  /* 手机上关闭液态动画，保留静态柔和背景，确保绝对流畅 */
+  .liquid-blob {
+    animation: none;
+    opacity: 0.3;
+    filter: blur(30px);
   }
 
   .hero-section { padding: 40px 16px 24px; min-height: auto; }
